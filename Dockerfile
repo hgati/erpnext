@@ -19,12 +19,13 @@ RUN sed -i 's/auth       required   pam_shells.so/auth       sufficient   pam_sh
 # Set locales
 RUN apt-get -y update \
     && apt-get -y install locales \
-    && sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    #&& sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen \
+    && echo 'ko_KR.UTF-8 UTF-8' >> /etc/locale.gen \
     && locale-gen
 
-ENV LC_ALL=en_US.UTF-8 \
-    LC_CTYPE=en_US.UTF-8 \
-    LANG=en_US.UTF-8
+ENV LC_ALL=ko_KR.UTF-8 \
+    LC_CTYPE=ko_KR.UTF-8 \
+    LANG=ko_KR.UTF-8
 
 # add users without sudo password
 ENV systemUser=frappe
