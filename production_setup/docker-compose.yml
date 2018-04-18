@@ -15,7 +15,7 @@ services:
       - "3307:3306"
 
   nginx:
-    image: nginx:1.12.2
+    image: nginx:1.13.12-alpine
     ports:
       - "80:80"
     volumes:
