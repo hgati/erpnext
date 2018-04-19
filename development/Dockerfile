@@ -1,4 +1,4 @@
-FROM parsemaker/erpnext-docker-debian:stable
+FROM parsemaker/erpnext:latest
 
 # set workdir
 USER $systemUser
