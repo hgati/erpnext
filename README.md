@@ -257,7 +257,7 @@ and most important thing is it separate data volumes from container to docker vo
 
 * Deploy stack using prd.yml as prd1 stack (In production folder where prd.yml is)
 
-    `docker-composer up -d`
+    `docker-composer -p <my project name> up -d`
 
 * Find frappe container id
 
@@ -287,7 +287,7 @@ and most important thing is it separate data volumes from container to docker vo
 
 * Restart frappe continaer
 
-    `docker-compose restart <service name for frappe>`
+    `docker-compose -p <my project name> restart <service name for frappe>`
 
 * Go to web browser and access ERPNext
 
