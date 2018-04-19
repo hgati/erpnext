@@ -1,4 +1,4 @@
-FROM ramomo/erpnext-docker-debian:stable
+FROM parsemaker/erpnext-docker-debian:stable
 
 # set workdir
 USER $systemUser
