@@ -30,9 +30,9 @@ you should change it to suit your environment.
 Example :
 
 Change this >
-`docker run -it -p 8000:8000 -p 9000:9000 --name <container_name> pipech/erpnext-docker-debian:stable bash`
+`docker run -it -p 8000:8000 -p 9000:9000 --name <container_name> parsemaker/erpnext bash`
 
-To this > `docker run -it -p 8000:8000 -p 9000:9000 --name anything pipech/erpnext-docker-debian:stable bash`
+To this > `docker run -it -p 8000:8000 -p 9000:9000 --name anything parsemaker/erpnext bash`
 
 ### Prerequisite
 
@@ -42,11 +42,9 @@ To this > `docker run -it -p 8000:8000 -p 9000:9000 --name anything pipech/erpne
 
 ### Images Tags
 
-* Tag : `latest` > latest image build
+* Tag : `latest` > latest image build & we can login and access ERPNext desk
 
-* Tag : `stable` > we can login and access ERPNext desk
-
-* Tag : `v10.0.20` > the higher version of ERPNext or Frappe
+* Tag : `10.1.23` > the higher version of ERPNext or Frappe
 
 ## Trial  Setup
 
@@ -57,11 +55,11 @@ it will run pre-build docker image from Docker hub.
 
 * Pull image
 
-    `docker pull pipech/erpnext-docker-debian:stable`
+    `docker pull parsemaker/erpnext`
 
 * Run latest erpnext_debian image from pipech Docker hub
 
-    `docker run -it --name <container_name> -p 8000-8005:8000-8005 -p 9000-9005:9000-9005 -p 3306-3307:3306-3307 pipech/erpnext-docker-debian:stable bash`
+    `docker run -it --name <container_name> -p 8000-8005:8000-8005 -p 9000-9005:9000-9005 -p 3306-3307:3306-3307 parsemaker/erpnext bash`
     
 * Start mysql
 
@@ -98,15 +96,15 @@ so you could explore the code.
 
 * Clone repository
 
-    `git clone https://github.com/pipech/erpnext-docker-debian.git`
+    `git clone -b custom https://github.com/hgati/erpnext.git`
 
 * Pull image
 
-    `docker pull pipech/erpnext-docker-debian:stable`
+    `docker pull parsemaker/erpnext`
     
 * Change work directory
 
-    `cd erpnext-docker-debian/development_setup`
+    `cd erpnext-docker-debian/development`
 
 * Run image using docker-compose (In development folder where docker-compose.yml is)
 
@@ -249,25 +247,17 @@ and most important thing is it separate data volumes from container to docker vo
 
 ### Usage
 
-* Pull image
-
-    `docker pull pipech/erpnext-docker-debian-production:stable`
-
-* Init swarm
-
-    `docker swarm init`
-    
 * Clone repository
 
-    `git clone https://github.com/pipech/erpnext-docker-debian.git`
+    `git clone -b custom https://github.com/hgati/erpnext.git`
     
 * Change work directory
 
-    `cd erpnext-docker-debian/production_setup`
+    `cd erpnext/production`
 
 * Deploy stack using prd.yml as prd1 stack (In production folder where prd.yml is)
 
-    `docker stack deploy -c prd.yml <stack_name>`
+    `docker-composer up -d`
 
 * Find frappe container id
 
@@ -297,7 +287,7 @@ and most important thing is it separate data volumes from container to docker vo
 
 * Restart frappe continaer
 
-    `docker service update --force <stack_name>_frappe`
+    `docker-compose restart <service name for frappe>`
 
 * Go to web browser and access ERPNext
 
@@ -310,17 +300,17 @@ and most important thing is it separate data volumes from container to docker vo
     `docker ps -a`
     ```
     CONTAINER ID        IMAGE                                            COMMAND                  CREATED             STATUS                     PORTS                               NAMES
-    9e56c741a6a6        pipech/erpnext-docker-debian-production:stable   "sudo /usr/bin/sup..."   4 minutes ago       Up 4 minutes               3306-3307/tcp, 8000/tcp, 9000/tcp   erpnext_frappe.1.vrh0qzzkh6hmou2gk0gqxkpd0
-    384d2793df39        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Up 7 minutes               80/tcp                              erpnext_nginx.1.0fe57owsq5mdgdbkbi33doamk
-    391840076d9f        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.q1yu20jar4jmddzecikdt82sv
-    b8ea6922ce3b        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.riw1gd8vmqmcezkepqrdq35bi
-    e2528e1b7bae        pipech/erpnext-docker-debian-production:stable   "sudo /usr/bin/sup..."   7 minutes ago       Exited (0) 4 minutes ago                                       erpnext_frappe.1.pl64cb3nqymyoopzew02gjdu9
+    9e56c741a6a6        parsemaker/erpnext:production                    "sudo /usr/bin/sup..."   4 minutes ago       Up 4 minutes               3306-3307/tcp, 8000/tcp, 9000/tcp   erpnext_frappe.1.vrh0qzzkh6hmou2gk0gqxkpd0
+    384d2793df39        nginx:1.13.12-alpine                             "nginx -g 'daemon ..."   7 minutes ago       Up 7 minutes               80/tcp                              erpnext_nginx.1.0fe57owsq5mdgdbkbi33doamk
+    391840076d9f        nginx:1.13.12-alpine                             "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.q1yu20jar4jmddzecikdt82sv
+    b8ea6922ce3b        nginx:1.13.12-alpine                             "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.riw1gd8vmqmcezkepqrdq35bi
+    e2528e1b7bae        parsemaker/erpnext:production                    "sudo /usr/bin/sup..."   7 minutes ago       Exited (0) 4 minutes ago                                       erpnext_frappe.1.pl64cb3nqymyoopzew02gjdu9
     5ec8a5aee49d        redis:alpine                                     "docker-entrypoint..."   7 minutes ago       Up 7 minutes               6379/tcp                            erpnext_redis-queue.1.n0ghgn710k6v9wnrqsuupojqn
     8c45f2b831ee        redis:alpine                                     "docker-entrypoint..."   7 minutes ago       Up 7 minutes               6379/tcp                            erpnext_redis-socketio.1.c1s0mn5x0uiwwv19hcgud8ipu
-    a9ece252518d        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.xau7shgy81e5ap4eonlhzi7s1
+    a9ece252518d        nginx:1.13.12-alpine                             "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.xau7shgy81e5ap4eonlhzi7s1
     aea2d2ffb36b        redis:alpine                                     "docker-entrypoint..."   7 minutes ago       Up 7 minutes               6379/tcp                            erpnext_redis-cache.1.wbiosu2sc4g87v6d4iaiikq8z
     0c594aaf9846        mariadb:10.2.12                                  "docker-entrypoint..."   7 minutes ago       Up 7 minutes               3306/tcp                            erpnext_mariadb.1.aufnny4nt9h0vnm5h083njbqq
-    a6e7f6f0acaa        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.lq158amte714526tys4bkj4ch
+    a6e7f6f0acaa        nginx:1.13.12-alpine                             "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.lq158amte714526tys4bkj4ch
     ```
 
 * Check service in frappe container, all 6 services should run with success
