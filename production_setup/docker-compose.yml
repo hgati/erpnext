@@ -4,7 +4,6 @@ services:
 
   mariadb:
     image: mariadb:10.2.12
-    container_name: mariadb
     labels:
       com.example.description: "what is the labels?"
       com.example.department: "when use the labels?"
@@ -29,7 +28,6 @@ services:
 
   nginx:
     image: nginx:1.13.12-alpine
-    container_name: nginx
     deploy:
       replicas: 1
       placement:
@@ -43,10 +41,12 @@ services:
     volumes:
       - frappe-sites-volumes:/home/frappe/bench/sites
       - frappe-apps-volumes:/home/frappe/bench/apps
+    depends_on:
+      - mariadb
+      - frappe
 
   redis-cache:
     image: redis:alpine
-    container_name: redis-cache
     deploy:
       replicas: 1
       placement:
@@ -59,7 +59,6 @@ services:
 
   redis-queue:
     image: redis:alpine
-    container_name: redis-queue
     deploy:
       replicas: 1
       placement:
@@ -72,7 +71,6 @@ services:
 
   redis-socketio:
     image: redis:alpine
-    container_name: redis-socketio
     deploy:
       replicas: 1
       placement:
@@ -85,7 +83,6 @@ services:
 
   frappe:
     image: parsemaker/erpnext:production
-    container_name: frappe
     deploy:
       replicas: 1
       placement:

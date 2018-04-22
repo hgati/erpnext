@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+
+PROJECT_NAME="${COMPOSE_PROJECT_NAME:-default}"
+
 usage() {
     echo "docker named volume backup & restore utility"
     echo "Usage: do <backup|restore>"
@@ -11,14 +14,14 @@ _backup() {
 
     docker-compose stop frappe
 
-    docker run -v mybiz_frappe-apps-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        backup mybiz_frappe-apps-volumes
-    docker run -v mybiz_frappe-logs-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        backup mybiz_frappe-logs-volumes
-    docker run -v mybiz_frappe-sites-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        backup mybiz_frappe-sites-volumes
-    docker run -v mybiz_mariadb-data-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        backup mybiz_mariadb-data-volumes
+    docker run -v ${PROJECT_NAME}_frappe-apps-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        backup ${PROJECT_NAME}_frappe-apps-volumes
+    docker run -v ${PROJECT_NAME}_frappe-logs-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        backup ${PROJECT_NAME}_frappe-logs-volumes
+    docker run -v ${PROJECT_NAME}_frappe-sites-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        backup ${PROJECT_NAME}_frappe-sites-volumes
+    docker run -v ${PROJECT_NAME}_mariadb-data-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        backup ${PROJECT_NAME}_mariadb-data-volumes
 
     docker-compose start frappe
 }
@@ -28,14 +31,14 @@ _restore() {
 
     docker-compose stop frappe
 
-    docker run -v mybiz_frappe-apps-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        restore mybiz_frappe-apps-volumes
-    docker run -v mybiz_frappe-logs-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        restore mybiz_frappe-logs-volumes
-    docker run -v mybiz_frappe-sites-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        restore mybiz_frappe-sites-volumes
-    docker run -v mybiz_mariadb-data-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
-        restore mybiz_mariadb-data-volumes
+    docker run -v ${PROJECT_NAME}_frappe-apps-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        restore ${PROJECT_NAME}_frappe-apps-volumes
+    docker run -v ${PROJECT_NAME}_frappe-logs-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        restore ${PROJECT_NAME}_frappe-logs-volumes
+    docker run -v ${PROJECT_NAME}_frappe-sites-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        restore ${PROJECT_NAME}_frappe-sites-volumes
+    docker run -v ${PROJECT_NAME}_mariadb-data-volumes:/volume -v $(pwd)/backup:/backup --rm loomchild/volume-backup \
+        restore ${PROJECT_NAME}_mariadb-data-volumes
 
     docker-compose start frappe
 }
