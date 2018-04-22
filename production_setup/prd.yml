@@ -6,9 +6,9 @@ services:
     image: mariadb:10.2.12
     hostname: node-1
     labels:
-      com.example.description: "label test"
-      com.example.department: "label test"
-      com.example.label-with-empty-value: ""
+      com.example.description: "what are the labels?"
+      com.example.department: "when use the labels?"
+      com.example.label-with-empty-value: "what purpose of the labels?"
     deploy:
       replicas: 1
       placement:
