@@ -50,8 +50,8 @@ To this > `docker run -it -p 8000:8000 -p 9000:9000 --name anything pipech/erpne
 
 ## Trial  Setup
 
-This setup is the most easy and straightforward way to run ERPNext on Docker, 
-it will run pre-build docker image from Docker hub. 
+This setup is the most easy and straightforward way to run ERPNext on Docker,
+it will run pre-build docker image from Docker hub.
 
 ### Usage
 
@@ -62,38 +62,38 @@ it will run pre-build docker image from Docker hub.
 * Run latest erpnext_debian image from pipech Docker hub
 
     `docker run -it --name <container_name> -p 8000-8005:8000-8005 -p 9000-9005:9000-9005 -p 3306-3307:3306-3307 pipech/erpnext-docker-debian:stable bash`
-    
+
 * Start mysql
 
     `sudo service mysql start`
-    
+
 * Start development server
 
     `bench start`
-    
+
 * Go to web browser and access ERPNext
 
     `http://localhost:8000`
-    
+
 ### Clean-up
 
 * Stop development server, press ctrl +c in terminal
 
     `ctrl + c`
-    
+
 * Exit from container
 
     `exit`
-    
+
 * Remove container
 
     `docker rm -f <container_name>`
-    
+
 ## Development Setup
 
-This setup will share apps and sites folder to host machine 
+This setup will share apps and sites folder to host machine
 so you could explore the code.
-    
+
 ### Usage
 
 * Clone repository
@@ -103,7 +103,7 @@ so you could explore the code.
 * Pull image
 
     `docker pull pipech/erpnext-docker-debian:stable`
-    
+
 * Change work directory
 
     `cd erpnext-docker-debian/development_setup`
@@ -111,7 +111,7 @@ so you could explore the code.
 * Run image using docker-compose (In development folder where docker-compose.yml is)
 
     `docker-compose up -d`
-    
+
 * Find frappe container id
 
     `docker ps -a`
@@ -119,11 +119,11 @@ so you could explore the code.
 * Call bash in frappe container
 
     `docker exec -it <frappe_container_id> bash`
-    
+
 * Run init.sh
 
     `. init.sh`
-    
+
 * Restart container
 
     ```
@@ -131,7 +131,7 @@ so you could explore the code.
     docker stop <frappe_container_id>
     docker start <frappe_container_id>
     ```
-    
+
 * Call bash in frappe container
 
     `docker exec -it <frappe_container_id> bash`
@@ -144,7 +144,7 @@ so you could explore the code.
 * Go to web browser and access ERPNext
 
     `http://localhost:8000`
-    
+
 * Access mysql using [MySQL Workbench](https://www.mysql.com/products/workbench)
 
     ```
@@ -159,18 +159,18 @@ so you could explore the code.
 * Stop development server, press ctrl +c in terminal
 
     `ctrl + c`
-    
+
 * Exit from container
 
     `exit`
-    
+
 * Remove container using docker-compose
 
     `docker-compose down`
-    
+
 ## Production Setup
 
-In this setup we use the same ERPNext image as we use in trail setup 
+In this setup we use the same ERPNext image as we use in trail setup
 and config it to run production
 and instead of running all service in single container we separate some and put it into 6 container,
 and most important thing is it separate data volumes from container to docker volumes.
@@ -188,7 +188,7 @@ and most important thing is it separate data volumes from container to docker vo
 
     AMI: Amazon Linux AMI 2017.09.1 (HVM), SSD Volume Type
     Type: t2.small (2GB of Ram)
-    
+
 **Update Security Group**
 
 * Update Inbound Rules
@@ -206,23 +206,23 @@ and most important thing is it separate data volumes from container to docker vo
 * Install Docker and Git
 
     `sudo yum install -y docker git`
-    
+
 * Start Docker
 
     `sudo service docker start`
-    
+
 * Add permissions for ec2-user to use Docker
 
     `sudo usermod -a -G docker ec2-user`
-    
-* Log out and log back in again to pick up the new docker group permissions. 
-    
+
+* Log out and log back in again to pick up the new docker group permissions.
+
     You can accomplish this by closing your current SSH terminal window and reconnecting to your instance in a new one.
 
 * Check ec2-user permission
 
     `docker info`
-    
+
 **[Set timezone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html#configure-amazon-time-service)**
 
 * Connect to instance using ssh
@@ -239,7 +239,7 @@ and most important thing is it separate data volumes from container to docker vo
 
     `ZONE="America/Los_Angeles"`
 
-* Create symbolic link /etc/localtime and your time zone file 
+* Create symbolic link /etc/localtime and your time zone file
 
     `sudo ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime`
 
@@ -256,11 +256,11 @@ and most important thing is it separate data volumes from container to docker vo
 * Init swarm
 
     `docker swarm init`
-    
+
 * Clone repository
 
     `git clone https://github.com/pipech/erpnext-docker-debian.git`
-    
+
 * Change work directory
 
     `cd erpnext-docker-debian/production_setup`
@@ -276,15 +276,15 @@ and most important thing is it separate data volumes from container to docker vo
 * Find frappe container id
 
     `docker exec -it <frappe_container_id> bash`
-    
+
 * Run init.sh
 
     `cd .. && . init.sh`
-    
+
 * Exit from container
 
     `exit`
-    
+
 * Config mysql
 
     `docker exec -it <mysql_container_id> bash`

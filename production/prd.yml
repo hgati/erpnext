@@ -1,10 +1,19 @@
-version: '3.3'
+version: '3.6'
+
 services:
 
   mariadb:
     image: mariadb:10.2.12
+    hostname: node1
+    labels:
+      com.example.description: "label test"
+      com.example.department: "label test"
+      com.example.label-with-empty-value: ""
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node5
     environment:
       - MYSQL_USER=root
       - MYSQL_ROOT_PASSWORD=123
@@ -19,7 +28,8 @@ services:
       - "3307:3306"
 
   nginx:
-    image: nginx:1.12.2
+    image: nginx:1.13.12-alpine
+    hostname: node2
     deploy:
       replicas: 1
     configs:
@@ -33,6 +43,7 @@ services:
 
   redis-cache:
     image: redis:alpine
+    hostname: node3
     deploy:
       replicas: 1
     configs:
@@ -42,6 +53,7 @@ services:
 
   redis-queue:
     image: redis:alpine
+    hostname: node4
     deploy:
       replicas: 1
     configs:
@@ -51,6 +63,7 @@ services:
 
   redis-socketio:
     image: redis:alpine
+    hostname: node5
     deploy:
       replicas: 1
     configs:
@@ -59,7 +72,8 @@ services:
     command: ["redis-server","/etc/conf.d/redis.conf"]
 
   frappe:
-    image: pipech/erpnext-docker-debian-production:stable
+    image: parsemaker/erpnext:production
+    hostname: node6
     deploy:
       replicas: 1
     environment:
