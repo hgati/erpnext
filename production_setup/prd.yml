@@ -4,7 +4,7 @@ services:
 
   mariadb:
     image: mariadb:10.2.12
-    hostname: node1
+    hostname: node-1
     labels:
       com.example.description: "label test"
       com.example.department: "label test"
@@ -13,7 +13,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == node1
+          - node.hostname == node-1
     environment:
       - MYSQL_USER=root
       - MYSQL_ROOT_PASSWORD=123
@@ -29,9 +29,12 @@ services:
 
   nginx:
     image: nginx:1.13.12-alpine
-    hostname: node2
+    hostname: node-1
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node-1
     configs:
       - source: nginx-conf
         target: /etc/nginx/conf.d/default.conf
@@ -43,9 +46,12 @@ services:
 
   redis-cache:
     image: redis:alpine
-    hostname: node3
+    hostname: node-1
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node-1
     configs:
       - source: redis-cache-conf
         target: /etc/conf.d/redis.conf
@@ -53,9 +59,12 @@ services:
 
   redis-queue:
     image: redis:alpine
-    hostname: node4
+    hostname: node-1
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node-1
     configs:
       - source: redis-queue-conf
         target: /etc/conf.d/redis.conf
@@ -63,9 +72,12 @@ services:
 
   redis-socketio:
     image: redis:alpine
-    hostname: node5
+    hostname: node-1
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node-1
     configs:
       - source: redis-socketio-conf
         target: /etc/conf.d/redis.conf
@@ -73,9 +85,12 @@ services:
 
   frappe:
     image: parsemaker/erpnext:production
-    hostname: node6
+    hostname: node-1
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == node-1
     environment:
       - benchNewSiteName=prdsite1.local
     ports:
