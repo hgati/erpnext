@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 usage() {
+    echo "docker named volume backup & restore utility"
     echo "Usage: do <backup|restore>"
     exit
 }
