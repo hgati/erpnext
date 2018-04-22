@@ -4,7 +4,7 @@
 PROJECT_NAME="${COMPOSE_PROJECT_NAME:-default}"
 
 usage() {
-    echo "docker named volume backup & restore utility"
+    echo "Named volume backup & restore utility"
     echo "Usage: do <backup|restore>"
     exit
 }

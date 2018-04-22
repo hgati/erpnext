@@ -41,9 +41,6 @@ services:
     volumes:
       - frappe-sites-volumes:/home/frappe/bench/sites
       - frappe-apps-volumes:/home/frappe/bench/apps
-    depends_on:
-      - mariadb
-      - frappe
 
   redis-cache:
     image: redis:alpine

@@ -1,0 +1,31 @@
+version: '3.6'
+
+services:
+
+  mariadb:
+    volumes:
+      - ./conf/mariadb-conf/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
+      - ./conf/mariadb-conf/init.sql:/home/init.sql
+
+  nginx:
+    volumes:
+      - ./conf/nginx-conf/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - mariadb
+      - frappe
+
+  redis-cache:
+    volumes:
+      - ./conf/nginx-conf/nginx.conf:/etc/conf.d/redis.conf
+
+  redis-queue:
+    volumes:
+      - ./conf/redis-conf/redis_queue.conf:/etc/conf.d/redis.conf
+
+  redis-socketio:
+    volumes:
+      - ./conf/redis-conf/redis_socketio.conf:/etc/conf.d/redis.conf
+
+  frappe:
+    volumes:
+      - ./conf/frappe-docker-conf/init.sh:/home/frappe/init.sh
