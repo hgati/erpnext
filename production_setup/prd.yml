@@ -13,7 +13,7 @@ services:
       replicas: 1
       placement:
         constraints:
-          - node.hostname == node5
+          - node.hostname == node1
     environment:
       - MYSQL_USER=root
       - MYSQL_ROOT_PASSWORD=123
