@@ -28,9 +28,12 @@ services:
       - certs-volumes:/etc/nginx/certs:rw
 
   nginx-frappe:
-    image: nginx:1.12.2
+    image: nginx:1.13.12-alpine
     deploy:
       replicas: 1
+      placement:
+        constraints:
+          - node.hostname == nginx-frappe
     configs:
       - source: nginx-conf
         target: /etc/nginx/conf.d/default.conf
@@ -65,22 +68,6 @@ services:
       - mariadb-data-volumes:/var/lib/mysql
     ports:
       - "3307:3306"
-
-  nginx:
-    image: nginx:1.13.12-alpine
-    deploy:
-      replicas: 1
-      placement:
-        constraints:
-          - node.hostname == nginx
-    configs:
-      - source: nginx-conf
-        target: /etc/nginx/conf.d/default.conf
-    ports:
-      - "80:80"
-    volumes:
-      - frappe-sites-volumes:/home/frappe/bench/sites
-      - frappe-apps-volumes:/home/frappe/bench/apps
 
   redis-cache:
     image: redis:alpine

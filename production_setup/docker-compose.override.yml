@@ -7,7 +7,7 @@ services:
       - ./conf/mariadb-conf/mariadb.cnf:/etc/mysql/conf.d/mariadb.cnf
       - ./conf/mariadb-conf/init.sql:/home/init.sql
 
-  nginx:
+  nginx-frappe:
     volumes:
       - ./conf/nginx-conf/nginx.conf:/etc/nginx/conf.d/default.conf
     depends_on:
