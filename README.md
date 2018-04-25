@@ -50,8 +50,8 @@ To this > `docker run -it -p 8000:8000 -p 9000:9000 --name anything pipech/erpne
 
 ## Trial  Setup
 
-This setup is the most easy and straightforward way to run ERPNext on Docker,
-it will run pre-build docker image from Docker hub.
+This setup is the most easy and straightforward way to run ERPNext on Docker, 
+it will run pre-build docker image from Docker hub. 
 
 ### Usage
 
@@ -62,38 +62,38 @@ it will run pre-build docker image from Docker hub.
 * Run latest erpnext_debian image from pipech Docker hub
 
     `docker run -it --name <container_name> -p 8000-8005:8000-8005 -p 9000-9005:9000-9005 -p 3306-3307:3306-3307 pipech/erpnext-docker-debian:stable bash`
-
+    
 * Start mysql
 
     `sudo service mysql start`
-
+    
 * Start development server
 
     `bench start`
-
+    
 * Go to web browser and access ERPNext
 
     `http://localhost:8000`
-
+    
 ### Clean-up
 
 * Stop development server, press ctrl +c in terminal
 
     `ctrl + c`
-
+    
 * Exit from container
 
     `exit`
-
+    
 * Remove container
 
     `docker rm -f <container_name>`
-
+    
 ## Development Setup
 
-This setup will share apps and sites folder to host machine
+This setup will share apps and sites folder to host machine 
 so you could explore the code.
-
+    
 ### Usage
 
 * Clone repository
@@ -103,7 +103,7 @@ so you could explore the code.
 * Pull image
 
     `docker pull pipech/erpnext-docker-debian:stable`
-
+    
 * Change work directory
 
     `cd erpnext-docker-debian/development_setup`
@@ -111,7 +111,7 @@ so you could explore the code.
 * Run image using docker-compose (In development folder where docker-compose.yml is)
 
     `docker-compose up -d`
-
+    
 * Find frappe container id
 
     `docker ps -a`
@@ -119,11 +119,11 @@ so you could explore the code.
 * Call bash in frappe container
 
     `docker exec -it <frappe_container_id> bash`
-
+    
 * Run init.sh
 
     `. init.sh`
-
+    
 * Restart container
 
     ```
@@ -131,7 +131,7 @@ so you could explore the code.
     docker stop <frappe_container_id>
     docker start <frappe_container_id>
     ```
-
+    
 * Call bash in frappe container
 
     `docker exec -it <frappe_container_id> bash`
@@ -144,7 +144,7 @@ so you could explore the code.
 * Go to web browser and access ERPNext
 
     `http://localhost:8000`
-
+    
 * Access mysql using [MySQL Workbench](https://www.mysql.com/products/workbench)
 
     ```
@@ -159,28 +159,30 @@ so you could explore the code.
 * Stop development server, press ctrl +c in terminal
 
     `ctrl + c`
-
+    
 * Exit from container
 
     `exit`
-
+    
 * Remove container using docker-compose
 
     `docker-compose down`
-
+    
 ## Production Setup
 
-In this setup we use the same ERPNext image as we use in trail setup
+In this setup we use the same ERPNext image as we use in trial setup 
 and config it to run production
-and instead of running all service in single container we separate some and put it into 6 container,
+and instead of running all service in single container we separate some and put it into 8 container,
 and most important thing is it separate data volumes from container to docker volumes.
 
 1. frappe
 2. mariadb
-3. nginx
+3. nginx-frappe
 4. redis cache
 5. redis queue
 6. redis socketio
+7. nginx-proxy
+8. nginx-letsencrypt
 
 ### Prerequisite using Amazon EC2
 
@@ -188,7 +190,7 @@ and most important thing is it separate data volumes from container to docker vo
 
     AMI: Amazon Linux AMI 2017.09.1 (HVM), SSD Volume Type
     Type: t2.small (2GB of Ram)
-
+    
 **Update Security Group**
 
 * Update Inbound Rules
@@ -206,23 +208,23 @@ and most important thing is it separate data volumes from container to docker vo
 * Install Docker and Git
 
     `sudo yum install -y docker git`
-
+    
 * Start Docker
 
     `sudo service docker start`
-
+    
 * Add permissions for ec2-user to use Docker
 
     `sudo usermod -a -G docker ec2-user`
-
-* Log out and log back in again to pick up the new docker group permissions.
-
+    
+* Log out and log back in again to pick up the new docker group permissions. 
+    
     You can accomplish this by closing your current SSH terminal window and reconnecting to your instance in a new one.
 
 * Check ec2-user permission
 
     `docker info`
-
+    
 **[Set timezone](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html#configure-amazon-time-service)**
 
 * Connect to instance using ssh
@@ -230,6 +232,8 @@ and most important thing is it separate data volumes from container to docker vo
 * Find timezone in /usr/share/zoneinfo
 
     `ls /usr/share/zoneinfo`
+    
+    `ls /usr/share/zoneinfo/Asia`
 
 * Update timezone in /etc/sysconfig/clock
 
@@ -237,15 +241,19 @@ and most important thing is it separate data volumes from container to docker vo
 
 * Replace ZONE with your timezone
 
-    `ZONE="America/Los_Angeles"`
+    `ZONE="Asia/Bangkok"`
 
-* Create symbolic link /etc/localtime and your time zone file
+* Create symbolic link /etc/localtime and your time zone file 
 
-    `sudo ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime`
+    `sudo ln -sf /usr/share/zoneinfo/Asia/Bangkok /etc/localtime`
 
 * Reboot
 
     `sudo reboot`
+
+* Check setting
+
+    `date`
 
 ### Usage
 
@@ -256,14 +264,23 @@ and most important thing is it separate data volumes from container to docker vo
 * Init swarm
 
     `docker swarm init`
-
+    
 * Clone repository
 
     `git clone https://github.com/pipech/erpnext-docker-debian.git`
-
+    
 * Change work directory
 
     `cd erpnext-docker-debian/production_setup`
+
+* Change Environment in prd.yml file
+
+    ```
+    - DEFAULT_HOST
+    - VIRTUAL_HOST
+    - LETSENCRYPT_HOST
+    - LETSENCRYPT_EMAIL
+    ```
 
 * Deploy stack using prd.yml as prd1 stack (In production folder where prd.yml is)
 
@@ -276,15 +293,15 @@ and most important thing is it separate data volumes from container to docker vo
 * Find frappe container id
 
     `docker exec -it <frappe_container_id> bash`
-
+    
 * Run init.sh
 
     `cd .. && . init.sh`
-
+    
 * Exit from container
 
     `exit`
-
+    
 * Config mysql
 
     `docker exec -it <mysql_container_id> bash`
@@ -295,32 +312,42 @@ and most important thing is it separate data volumes from container to docker vo
 
     `exit`
 
-* Restart frappe continaer
+* Restart frappe container
 
     `docker service update --force <stack_name>_frappe`
+    
+* Remove all exited container
 
-* Go to web browser and access ERPNext
+    `docker rm $(docker ps -a -q)`
 
-    `http://localhost`
+* Go to web browser and access ERPNext or your domain
+
+    `http://yourdomain.com`
+
+### Finishing up
+
+* Don't forget to change administrator password
+
+    ```
+    User : Administrator
+    Pass : admin
+    ```
 
 ### Health-check
 
-* All 6 container should running, some might exit but there have to be 6 container running
+* All 8 services should running.
 
-    `docker ps -a`
+    `docker service ls`
     ```
-    CONTAINER ID        IMAGE                                            COMMAND                  CREATED             STATUS                     PORTS                               NAMES
-    9e56c741a6a6        pipech/erpnext-docker-debian-production:stable   "sudo /usr/bin/sup..."   4 minutes ago       Up 4 minutes               3306-3307/tcp, 8000/tcp, 9000/tcp   erpnext_frappe.1.vrh0qzzkh6hmou2gk0gqxkpd0
-    384d2793df39        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Up 7 minutes               80/tcp                              erpnext_nginx.1.0fe57owsq5mdgdbkbi33doamk
-    391840076d9f        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.q1yu20jar4jmddzecikdt82sv
-    b8ea6922ce3b        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.riw1gd8vmqmcezkepqrdq35bi
-    e2528e1b7bae        pipech/erpnext-docker-debian-production:stable   "sudo /usr/bin/sup..."   7 minutes ago       Exited (0) 4 minutes ago                                       erpnext_frappe.1.pl64cb3nqymyoopzew02gjdu9
-    5ec8a5aee49d        redis:alpine                                     "docker-entrypoint..."   7 minutes ago       Up 7 minutes               6379/tcp                            erpnext_redis-queue.1.n0ghgn710k6v9wnrqsuupojqn
-    8c45f2b831ee        redis:alpine                                     "docker-entrypoint..."   7 minutes ago       Up 7 minutes               6379/tcp                            erpnext_redis-socketio.1.c1s0mn5x0uiwwv19hcgud8ipu
-    a9ece252518d        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.xau7shgy81e5ap4eonlhzi7s1
-    aea2d2ffb36b        redis:alpine                                     "docker-entrypoint..."   7 minutes ago       Up 7 minutes               6379/tcp                            erpnext_redis-cache.1.wbiosu2sc4g87v6d4iaiikq8z
-    0c594aaf9846        mariadb:10.2.12                                  "docker-entrypoint..."   7 minutes ago       Up 7 minutes               3306/tcp                            erpnext_mariadb.1.aufnny4nt9h0vnm5h083njbqq
-    a6e7f6f0acaa        nginx:1.12.2                                     "nginx -g 'daemon ..."   7 minutes ago       Exited (1) 7 minutes ago                                       erpnext_nginx.1.lq158amte714526tys4bkj4ch
+        ID                  NAME                    MODE                REPLICAS            IMAGE                                            PORTS
+    ywe1xryvsfun        p06_frappe              replicated          1/1                 pipech/erpnext-docker-debian-production:stable   *:6787->6787/tcp,*:8000->8000/tcp,*:9000->9000/tcp
+    v93gdseu5agy        p06_mariadb             replicated          1/1                 mariadb:10.2.12                                  *:3307->3306/tcp
+    8wnwrnijgash        p06_nginx-frappe        replicated          1/1                 nginx:1.12.2                                     *:8080->80/tcp
+    4dzi4g0x4d9x        p06_nginx-letsencrypt   replicated          1/1                 jrcs/letsencrypt-nginx-proxy-companion:latest
+    ops1qx3f3cxs        p06_nginx-proxy         replicated          1/1                 jwilder/nginx-proxy:latest                       *:80->80/tcp,*:443->443/tcp
+    x6er9y432gjt        p06_redis-cache         replicated          1/1                 redis:alpine
+    2r1zu913egm7        p06_redis-queue         replicated          1/1                 redis:alpine
+    zjfdf8i64j42        p06_redis-socketio      replicated          1/1                 redis:alpine
     ```
 
 * Check service in frappe container, all 6 services should run with success
