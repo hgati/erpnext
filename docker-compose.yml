@@ -1,0 +1,36 @@
+version: '3.6'
+
+services:
+
+  magento:
+    build: ./docker/magento
+    image: magento
+    container_name: magento
+    ports:
+      - "80:80"
+    volumes:
+      - ./src/code:/var/www/html/app/code/local/Cobay/MagentoErpnext
+      - ./src/etc/Cobay_MagentoErpnext.xml:/var/www/html/app/etc/modules/Cobay_MagentoErpnext.xml
+    env_file:
+      - env
+
+  mysql:
+    image: mysql:5.7.22
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - env
+
+  erpnext:
+    build: ./docker/erpnext
+    image: erpnext
+    container_name: erpnext
+    ports:
+      - "8000:8000" #webserver_port
+      - "9000:9000" #socketio_port
+      - "6787:6787" #file_watcher_port
+      - "3307:3306" #mariadb_port
+    stdin_open: true
+    tty: true
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<modules>
+		<Cobay_MagentoErpnext>
+			<version>0.1.0</version>
+		</Cobay_MagentoErpnext>
+	</modules>
+
+	<global>
+		<blocks>
+			<nginxcache>
+				<class>Cobay_MagentoErpnext_Block</class>
+			</nginxcache>
+		</blocks>
+		<models>
+			<nginxcache>
+				<class>Cobay_MagentoErpnext_Model</class>
+			</nginxcache>
+		</models>
+		<helpers>
+			<nginxcache>
+				<class>Cobay_MagentoErpnext_Helper</class>
+			</nginxcache>
+		</helpers>
+	</global>
+
+	<adminhtml>
+		<events>
+		</events>
+	</adminhtml>
+
+</config>

@@ -1,27 +1,45 @@
-#  ERPNext on Docker
+# magento-erpnext extension
 
-**The goal of this repo is stability.**
+- Magento 1.9.3.8
+- ERPNext latest(10.1.27)
+- Magento ERPNext Integration
 
-##### Problem
+- Magento sample data
+    ```sh
+    docker exec -it magento install-sampledata
+    ```
 
-* ERPNext development tend to go very fast, new update comes every days 
-and some will be bugs.
+- Magento installation script
+    ```sh
+    docker exec -it magento install-magento
+    ```
 
-* ERPNext use many dependencies, during installation sometimes somethings might went wrong.
+- Add to your host file
+    ```sh
+    127.0.0.1   magento.local
+    ```
 
-##### Solution
+- Browse magento site
+    ```sh
+    # frontend
+    http://magento.local
 
-Using docker we can pre-build images and push it to [Docker hub](https://hub.docker.com/r/pipech/erpnext-docker-debian/),
-so you will always have usable images and can choose which version you want to use.
+    # backend (admin/a123456)
+    http://magento.local/admin
+    ```
 
-## Usage
+- MySQL
+    ```sh
+    MYSQL_ROOT_PASSWORD=a123456
+    MYSQL_DATABASE=magento
+    MYSQL_USER=magento
+    MYSQL_PASSWORD=magento
+    ```
 
-Read at [https://pipech.github.io/erpnext-docker-debian](https://pipech.github.io/erpnext-docker-debian)
+- ERPNext
+    ```sh
+    # administrator/12345
+    http://localhost:8000
+    ```
 
-## Contributing
-
-Pull requests for new features, bug fixes, and suggestions are welcome!
-
-## License
-
-MIT
+- MariaDB for ERPNext (remote/12345) - port 3307
