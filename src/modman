@@ -1,0 +1,4 @@
+## Magento Extension
+
+code                            app/code/local/Cobay/MagentoErpnext/
+etc/Cobay_MagentoErpnext.xml    app/etc/modules/Cobay_MagentoErpnext.xml
