@@ -1,8 +1,7 @@
-# magento-erpnext connector
+# magento-erpnext connector module
 
 - Magento 1.9.3.8
-- ERPNext latest(10.1.27)
-- Magento ERPNext Integration
+- ERPNext 10.1.27
 
 - Magento sample data
     ```sh
