@@ -16,7 +16,7 @@ services:
 
   redis-cache:
     volumes:
-      - ./conf/nginx-conf/nginx.conf:/etc/conf.d/redis.conf
+      - ./conf/redis-conf/redis_cache.conf:/etc/conf.d/redis.conf
 
   redis-queue:
     volumes:
