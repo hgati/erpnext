@@ -2,6 +2,7 @@ version: '3.6'
 
 services:
 
+  #### MAGENTO ###########################
   magento:
     build: ./docker/magento
     image: magento
@@ -22,6 +23,7 @@ services:
     env_file:
       - env
 
+  #### ERPNEXT ###########################
   erpnext:
     build: ./docker/erpnext
     image: erpnext
