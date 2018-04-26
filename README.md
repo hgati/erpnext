@@ -1,4 +1,4 @@
-# magento-erpnext extension
+# magento-erpnext connector
 
 - Magento 1.9.3.8
 - ERPNext latest(10.1.27)
