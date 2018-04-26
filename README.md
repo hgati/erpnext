@@ -29,7 +29,9 @@
     # frontend
     http://magento.local
 
-    # backend (admin/a123456)
+    # backend
+    #   - username: admin
+    #   - password: a123456
     http://magento.local/admin
     ```
 
