@@ -3,12 +3,17 @@
 - Magento 1.9.3.8
 - ERPNext 10.1.27
 
-- Magento sample data
+- Run containers
+    ```sh
+    docker-compose up -d
+    ```
+
+- Install magento sample data
     ```sh
     docker exec -it magento install-sampledata
     ```
 
-- Magento installation script
+- Install magento installation script
     ```sh
     docker exec -it magento install-magento
     ```
@@ -16,6 +21,7 @@
 - Add to your host file
     ```sh
     127.0.0.1   magento.local
+    127.0.0.1   site1.local
     ```
 
 - Browse magento site
@@ -27,18 +33,26 @@
     http://magento.local/admin
     ```
 
-- MySQL
+- MySQL connect info
     ```sh
-    MYSQL_ROOT_PASSWORD=a123456
-    MYSQL_DATABASE=magento
-    MYSQL_USER=magento
-    MYSQL_PASSWORD=magento
+    MYSQL ROOT PASSWORD: a123456
+    MYSQL DATABASE NAME: magento
+    MYSQL USER: magento
+    MYSQL PASSWORD: magento
     ```
 
-- ERPNext
+- Browse erpnext site
     ```sh
-    # administrator/12345
-    http://localhost:8000
+    # username: administrator
+    # password: 12345
+
+    http://site1.local:8000
     ```
 
-- MariaDB for ERPNext (remote/12345) - port 3307
+- MariaDB (for ERPNext) connect info
+    ```sh
+    MariaDB ROOT PASSWORD: travis
+    MariaDB USER: remote
+    MariaDB PASSWORD: 12345
+    MariaDB CONNECT PORT: 3307
+    ```
