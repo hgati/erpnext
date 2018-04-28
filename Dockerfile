@@ -96,6 +96,9 @@ RUN sed -i 's/--quiet//' /home/frappe/bench/Procfile
 USER $systemUser
 WORKDIR /home/$systemUser/$benchFolderName
 
+# add entrypoint for trial setup
+ADD entrypoint.sh /entrypoint.sh
+
 # run start mysql service when container start
 CMD ["sudo", "mysqld"]
 
