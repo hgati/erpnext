@@ -1,4 +1,4 @@
-FROM pipech/erpnext-docker-debian:stable
+FROM pipech/erpnext-docker-debian:v10.0.20
 
 RUN echo "Upgrade ERPNext" \
     && sudo service mysql start \
