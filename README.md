@@ -1,6 +1,6 @@
 # ERPNext on Docker
 
-**The goal of this repo is simple production for single server.**
+**simple production for single server.**
 
 ### Usage
 
@@ -35,7 +35,7 @@
       mariadb-data-volumes:
     ```
 
-- Just Run ~ That's it ~
+- Start ~ That's it ~
     ```bash
     $ docker-compose up -d
     ```
