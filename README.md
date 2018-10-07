@@ -1,27 +1,63 @@
-#  ERPNext on Docker
+# ERPNext on Docker
 
-**The goal of this repo is stability.**
+**The goal of this repo is simple production for single server.**
 
-##### Problem
+### Usage
 
-* ERPNext development tend to go very fast, new update comes every days 
-and some will be bugs.
+- Go to home directory
+    ```bash
+    $ cd ~
+    ```
 
-* ERPNext use many dependencies, during installation sometimes somethings might went wrong.
+- docker-compose.yml
+    ```yaml
+    version: '3.3'
+    
+    services:
+      erpnext:
+        image: parsemaker/erpnext
+        container_name: erpnext
+        ports:
+            - "8000-8005:8000-8005"   #webserver_port
+            - "9000-9005:9000-9005"   #socketio_port
+            - "3306-3307:3306-3307"   #mariadb_port
+        volumes:
+            - frappe-sites-volumes:/home/frappe/bench/sites
+            - frappe-logs-volumes:/home/frappe/bench/logs
+            - mariadb-data-volumes:/var/lib/mysql
+        restart: always
+    
+    volumes:
+      frappe-sites-volumes:
+      frappe-logs-volumes:
+      mariadb-data-volumes:
+    ```
 
-##### Solution
+- Just Run ~ That's it ~
+    ```bash
+    $ docker-compose up -d
+    ```
 
-Using docker we can pre-build images and push it to [Docker hub](https://hub.docker.com/r/pipech/erpnext-docker-debian/),
-so you will always have usable images and can choose which version you want to use.
+- Go to web browser and access ERPNext
+    ```bash
+    http://localhost:8000
+    ```
 
-## Usage
 
-Read at [https://pipech.github.io/erpnext-docker-debian](https://pipech.github.io/erpnext-docker-debian)
-
-## Contributing
-
-Pull requests for new features, bug fixes, and suggestions are welcome!
-
-## License
-
-MIT
+- User & Password
+    - Website
+    ```
+    User : Administrator
+    Pass : 12345
+    ```
+    - MariaDB
+    ```
+    User : root
+    Pass : travis
+    ```
+    ```
+    Hostname : localhost
+    Port : 3306
+    User : remote
+    Pass : 12345
+    ```

@@ -40,6 +40,9 @@ RUN adduser --disabled-password --gecos "" $systemUser \
 USER $systemUser
 WORKDIR /home/$systemUser
 
+# COPY MY CUSTOM MYSQL CONFIGURATION - optimized in minimal db resource.
+COPY mariadb-docker-conf/custom.cnf /tmp/custom.cnf
+
 # install prerequisite for bench with easy install script
 ENV easyinstallRepo='https://raw.githubusercontent.com/frappe/bench/master/playbooks/install.py' \
     benchPath=bench-repo \
@@ -72,6 +75,7 @@ RUN wget $easyinstallRepo \
     && bench init $benchFolderName --frappe-path $frappeRepo --frappe-branch $frappeBranch --python $pythonVersion \
     # cd to bench folder and start mysql service
     && cd $benchFolderName \
+    && sudo mv /tmp/custom.cnf /etc/mysql/mariadb.conf.d/custom.cnf \
     && sudo service mysql start \
     # create new site
     && bench new-site $siteName \
@@ -94,7 +98,7 @@ USER $systemUser
 WORKDIR /home/$systemUser/$benchFolderName
 
 # copy production config
-COPY production_setup/conf/frappe-docker-conf /home/$systemUser/production_config
+COPY frappe-docker-conf /home/$systemUser/production_config
 # fix for [docker Error response from daemon OCI runtime create failed starting container process caused "permission denied" unknown]
 RUN sudo chmod +x /home/$systemUser/production_config/entrypoint_prd.sh
 
