@@ -16,16 +16,18 @@
     services:
       erpnext:
         image: parsemaker/erpnext
+        restart: always
         container_name: erpnext
         ports:
-            - "8000-8005:8000-8005"   #webserver_port
-            - "9000-9005:9000-9005"   #socketio_port
-            - "3306-3307:3306-3307"   #mariadb_port
+          - "80:8000"     #webserver_port
+          - "9000:9000"   #socketio_port
+          - "3306:3306"   #mariadb_port
         volumes:
-            - frappe-sites-volumes:/home/frappe/bench/sites
-            - frappe-logs-volumes:/home/frappe/bench/logs
-            - mariadb-data-volumes:/var/lib/mysql
-        restart: always
+          - frappe-sites-volumes:/home/frappe/bench/sites
+          - frappe-logs-volumes:/home/frappe/bench/logs
+          - mariadb-data-volumes:/var/lib/mysql
+        environment:
+          - NGINX_SERVER_NAME=erpnext.yourdomain.com      
     
     volumes:
       frappe-sites-volumes:
@@ -40,7 +42,8 @@
 
 - Go to web browser and access ERPNext
     ```bash
-    http://localhost:8000
+    http://localhost
+    OR http://erpnext.yourdomain.com
     ```
 
 

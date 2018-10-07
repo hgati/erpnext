@@ -41,7 +41,7 @@ USER $systemUser
 WORKDIR /home/$systemUser
 
 # COPY MY CUSTOM MYSQL CONFIGURATION - optimized in minimal db resource.
-COPY mariadb-docker-conf/custom.cnf /tmp/custom.cnf
+COPY custom.cnf /tmp/custom.cnf
 
 # install prerequisite for bench with easy install script
 ENV easyinstallRepo='https://raw.githubusercontent.com/frappe/bench/master/playbooks/install.py' \
