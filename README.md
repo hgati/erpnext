@@ -27,7 +27,7 @@
           - frappe-logs-volumes:/home/frappe/bench/logs
           - mariadb-data-volumes:/var/lib/mysql
         environment:
-          - NGINX_SERVER_NAME=erpnext.yourdomain.com      
+          - NGINX_SERVER_NAME=erpnext.yourdomain.com
     
     volumes:
       frappe-sites-volumes:
