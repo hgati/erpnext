@@ -15,7 +15,7 @@
     
     services:
       erpnext:
-        image: parsemaker/erpnext:10.1.56
+        image: parsemaker/erpnext
         restart: always
         container_name: erpnext
         ports:
