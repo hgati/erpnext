@@ -71,14 +71,14 @@
 - Backup docker volume
     - frank
         ```bash
-        . frank <backup|restore|delete> <options>
+        sudo frank.sh <backup|restore|delete> <options>
         ```
         
     - Setup CRON Job
         - Make backup.sh
         ```bash
-        . /home/<username>/erpnext-docker-debian/frank backup
-        . /home/<username>/erpnext-docker-debian/frank delete
+        sudo frank.sh backup
+        sudo frank.sh delete
         ```
         copy backup command above and place it in backup.sh
         

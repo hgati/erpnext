@@ -3,7 +3,7 @@
 # usage infomation
 usage() {
     echo "Named volume backup & restore utility"
-    echo "Usage: . frank <backup|restore|delete> <options>"
+    echo "Usage: sudo frank.sh <backup|restore|delete> <options>"
 }
 
 # variable
@@ -132,7 +132,7 @@ case $1 in
 	"restore")
 		if [[ -z $2 ]]; then
 			echo "Error: Specify folder name"
-			echo "Usage: . frank restore 2018-07-20-161800"
+			echo "Usage: sudo frank.sh restore 2018-07-20-161800"
 		else
 			BACKUP_FOLDER=$2
 			restore
